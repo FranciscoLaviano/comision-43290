@@ -12,15 +12,17 @@ const ItemListContainer = () => {
   const { categoryName } = useParams();
 
   useEffect(() => {
-
     let consulta;
 
     let productsCollection = collection(db, "products");
 
-    if(!categoryName){
-      consulta = productsCollection
-    }else{
-      consulta = query( productsCollection, where( "category", "==", categoryName) )
+    if (!categoryName) {
+      consulta = productsCollection;
+    } else {
+      consulta = query(
+        productsCollection,
+        where("category", "==", categoryName)
+      );
     }
 
     getDocs(consulta).then((res) => {
@@ -28,7 +30,7 @@ const ItemListContainer = () => {
       let arrayProductos = res.docs.map((product) => {
         return { ...product.data(), id: product.id };
       });
-      setItems(arrayProductos)
+      setItems(arrayProductos);
     });
   }, [categoryName]);
 
